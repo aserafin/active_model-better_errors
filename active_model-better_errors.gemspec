@@ -6,8 +6,8 @@ require "active_model/better_errors/version"
 Gem::Specification.new do |spec|
   spec.name          = "active_model-better_errors"
   spec.version       = ActiveModel::BetterErrors::VERSION
-  spec.authors       = ["Aaron Qian", "Byron Anderson"]
-  spec.email         = ["aq1018@gmail.com", "byronanderson32@gmail.com"]
+  spec.authors       = ["Aaron Qian", "Byron Anderson", "Kurtis Rainbolt-Greene"]
+  spec.email         = ["aq1018@gmail.com", "byronanderson32@gmail.com", "me@kurtisrainboltgreene.name"]
   spec.summary       = %q{API consumable error messages with ActiveModel::Errors drop-in compatibility.}
   spec.description   = spec.summary
   spec.homepage      = "http://aq1018.github.io/active_model-better_errors"
