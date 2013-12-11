@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'active_model/better_errors/version'
+require "active_model/better_errors/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "active_model-better_errors"
@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"]
-  spec.executables   = Dir["bin/**/*"].map! { |f| f.gsub(/bin\//, '') }
+  spec.executables   = Dir["bin/**/*"].map! { |f| f.gsub(/bin\//, "") }
   spec.test_files    = Dir["test/**/*", "spec/**/*"]
   spec.require_paths = ["lib"]
 
