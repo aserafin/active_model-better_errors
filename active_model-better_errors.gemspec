@@ -13,9 +13,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://github.com/aq1018/active_model-better_errors"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.files         = Dir["lib/**/*"]
+  spec.executables   = Dir["bin/**/*"].map! { |f| f.gsub(/bin\//, '') }
+  spec.test_files    = Dir["test/**/*", "spec/**/*"]
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "activemodel", ">= 3.0"
