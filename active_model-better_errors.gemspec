@@ -20,13 +20,14 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "activemodel", ">= 3.0"
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "~> 2.12.0"
   spec.add_development_dependency "mocha", '>= 0.12.1'
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "yard"
   spec.add_development_dependency "rdoc"
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rspec", "~> 2.14"
+  spec.add_development_dependency "rake", "~> 10.1"
+  spec.add_development_dependency "yard", "~> 0.8"
+  spec.add_development_dependency "kramdown", "~> 1.2"
+  spec.add_development_dependency "coveralls", "~> 0.7"
 end
 
 
