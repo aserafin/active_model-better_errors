@@ -5,8 +5,13 @@
 [![Dependency Status](https://gemnasium.com/aq1018/active_model-better_errors.png)](https://gemnasium.com/aq1018/active_model-better_errors)
 [![Code Climate](https://codeclimate.com/github/aq1018/active_model-better_errors.png)](https://codeclimate.com/github/aq1018/active_model-better_errors)
 
-`active_model-better_errors` is a `ActiveModel::Errors` compatible library to help you
-customize the presentation of your error messages.
+  - [![Version](https://badge.fury.io/rb/active_model-better_errors.png)](https://rubygems.org/gems/active_model-better_errors)
+  - [![Climate](https://codeclimate.com/github/aq1018/active_model-better_errors.png)](https://codeclimate.com/github/aq1018/active_model-better_errors)
+  - [![Build](http://img.shields.io/travis-ci/aq1018/active_model-better_errors.png)](https://travis-ci.org/aq1018/active_model-better_errors)
+  - [![Dependencies](https://gemnasium.com/aq1018/active_model-better_errors.png)](https://gemnasium.com/aq1018/active_model-better_errors)
+  - [![Coverage](http://img.shields.io/coveralls/aq1018/active_model-better_errors.png)](https://coveralls.io/r/aq1018/active_model-better_errors)
+  - [![Gittip](http://img.shields.io/gittip/aq1018.png)](https://www.gittip.com/aq1018/)
+  - [![License](http://img.shields.io/license/MIT.png?color=green)](http://opensource.org/licenses/MIT)
 
 ## Why Better Errors
 
