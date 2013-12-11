@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["aq1018@gmail.com", "byronanderson32@gmail.com"]
   spec.description   = "API consumable error messages with ActiveModel::Errors drop-in compatibility."
   spec.summary       = "active_model-better_errors is a ActiveModel::Errors compatible library to help you customize the presentation of your error messages."
-  spec.homepage      = "http://github.com/aq1018/active_model-better_errors"
+  spec.homepage      = "http://aq1018.github.io/active_model-better_errors"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"]
