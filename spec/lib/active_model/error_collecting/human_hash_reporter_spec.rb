@@ -1,32 +1,22 @@
 require 'spec_helper'
 
 describe ActiveModel::ErrorCollecting::HumanHashReporter do
-  subject(:reporter)  { klass.new collection }
-  let(:klass)         { ActiveModel::ErrorCollecting::HumanHashReporter }
-  let(:collection)    { ActiveModel::ErrorCollecting::ErrorCollection.new base}
-  let(:base)          { User.new }
+  include_context "example model"
+  include_context "error collection"
 
-  describe "#initialize" do
-    its(:collection) { should be collection }
-  end
-
-  describe "#base" do
-    its(:base) { should be base }
-  end
+  include_examples "reporter#base"
 
   describe "#to_hash" do
-    subject { reporter.to_hash }
-    let(:expected) {{
-      first_name: ["is invalid", "can't be empty"],
-      last_name: ["is invalid"]
-    }}
-
-    before  do
-      collection[:first_name] << :invalid
-      collection[:first_name] << :empty
-      collection[:last_name] << :invalid
+    let(:to_hash) { reporter.to_hash }
+    let(:hash) do
+      {
+        first_name: ["is invalid", "is too short (minimum is 3 characters)"],
+        last_name: ["is invalid"]
+      }
     end
 
-    it { should == expected }
+    it "returns the error hash" do
+      expect(to_hash).to eq(hash)
+    end
   end
 end

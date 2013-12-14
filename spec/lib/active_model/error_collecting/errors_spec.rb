@@ -1,95 +1,113 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ActiveModel::ErrorCollecting::Errors do
-  subject(:instance) { klass.new base }
-  let(:klass) { ActiveModel::ErrorCollecting::Errors }
-  let(:base)  { User.new }
-  let(:reporter_name) { :mock }
-  let(:mock_reporter) {
-    Class.new do
-      def initialize(collection)
-      end
-    end
-  }
+  include_context "example model"
 
-  describe "#initialize" do
-    its(:base) { should be base }
-  end
+  let(:errors) { described_class.new(model) }
+  let(:name) { "example_name" }
+  let(:reporter) { double("Reporter") }
 
   describe "#error_collection" do
-    subject { instance.error_collection }
-    it { should be_a ActiveModel::ErrorCollecting::ErrorCollection }
-    its(:base) { should be base }
+    let(:error_collection) { errors.error_collection }
+
+    it "is a type of error collection" do
+      expect(error_collection).to be_a(ActiveModel::ErrorCollecting::ErrorCollection)
+    end
   end
 
   describe "#message_reporter" do
-    subject { instance.message_reporter }
-    let(:mock_reporter) { mock() }
-    before {
-      instance.
-        should_receive(:get_reporter).
-        with(:message).
-        and_return(mock_reporter)
-    }
+    let(:message_reporter) { errors.message_reporter }
 
-    it { should be mock_reporter }
+    before(:each) do
+      allow(errors).to receive(:get_reporter).with(:message).and_return(reporter)
+    end
+
+    it "returns the reporter" do
+      expect(message_reporter).to be(reporter)
+    end
   end
 
   describe "#hash_reporter" do
-    subject { instance.hash_reporter }
-    let(:mock_reporter) { mock() }
-    before {
-      instance.
-        should_receive(:get_reporter).
-        with(:hash).
-        and_return(mock_reporter)
-    }
+    let(:hash_reporter) { errors.hash_reporter }
 
-    it { should be mock_reporter }
+    before(:each) do
+      allow(errors).to receive(:get_reporter).with(:hash).and_return(reporter)
+    end
+
+    it "returns the reporter" do
+      expect(hash_reporter).to be(reporter)
+    end
   end
 
   describe "#array_reporter" do
-    subject { instance.array_reporter }
-    let(:mock_reporter) { mock() }
-    before {
-      instance.
-        should_receive(:get_reporter).
-        with(:array).
-        and_return(mock_reporter)
-    }
+    let(:array_reporter) { errors.array_reporter }
 
-    it { should be mock_reporter }
+    before(:each) do
+      allow(errors).to receive(:array).with(:hash).and_return(reporter)
+    end
+
+    it "returns the reporter" do
+      expect(array_reporter).to be(reporter)
+    end
   end
 
   describe "#set_reporter" do
-    it "should set the reporter class" do
-      instance.set_reporter reporter_name, mock_reporter
-      reporter_classes = instance.instance_variable_get(:@reporter_classes)
-      reporter_classes[reporter_name.to_s].should == mock_reporter
+
+    context "without an any set reporter class" do
+      let(:reporter_classes) { errors.instance_variable_get(:@reporter_classes) }
+
+      before(:each) do
+        errors.set_reporter(name, reporter)
+      end
+
+      it "sets the reporter class" do
+        expect(reporter_classes[name]).to eq(reporter)
+      end
     end
 
-    it "should delete old reporter instance" do
-      reporters = instance.instance_variable_get(:@reporters)
-      reporters[reporter_name] = mock()
-      instance.set_reporter reporter_name, mock_reporter
-      reporters.has_key?(reporter_name.to_s).should be false
+    context "with an already set reporter class" do
+      let(:reporters) { errors.instance_variable_get(:@reporters) }
+
+      before(:each) do
+        reporters[name] = mock("OldReporter")
+        errors.set_reporter(name, reporter)
+      end
+
+      it "deletes old reporter instance" do
+        expect(reporters).to_not have_key(name)
+      end
     end
   end
 
   describe "#get_reporter_class" do
-    subject { instance.get_reporter_class(reporter_name) }
-    before { instance.set_reporter reporter_name, mock_reporter }
-    it { should == mock_reporter }
+    let(:get_reporter_class) { errors.get_reporter_class(name) }
+
+    before(:each) do
+      errors.set_reporter(name, reporter)
+    end
+
+    it "returns the reporter class" do
+      expect(get_reporter_class).to eq(reporter)
+    end
   end
 
   describe "#get_reporter" do
-    subject { instance.get_reporter(reporter_name) }
-    before { instance.set_reporter reporter_name, mock_reporter }
-    it { should be_a mock_reporter }
+    let(:get_reporter) { errors.get_reporter(name) }
+
+    before(:each) do
+      errors.set_reporter(name, reporter)
+    end
+
+    it "returns the reporter" do
+      expect(get_reporter).to be(reporter)
+    end
   end
 
   describe "#reporter_classes" do
-    subject { instance.reporter_classes }
-    it { should == ::ActiveModel::ErrorCollecting.reporters }
+    let(:repoter_classes) { errors.reporter_classes }
+
+    it "returns the ActiveModel::ErrorColelctiong reporters" do
+      expect(repoter_classes).to eq(::ActiveModel::ErrorCollecting.reporters)
+    end
   end
 end

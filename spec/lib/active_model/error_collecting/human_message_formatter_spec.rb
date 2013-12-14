@@ -1,22 +1,18 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ActiveModel::ErrorCollecting::HumanMessageFormatter do
-  subject(:formatter) { klass.new base, error_message }
-  let(:klass)         { ActiveModel::ErrorCollecting::HumanMessageFormatter }
-  let(:base)          { User.new }
-  let(:error_message) { ActiveModel::ErrorCollecting::ErrorMessage.build base, :first_name, :invalid }
+  include_context "example model"
 
-  describe "#initialize" do
-    its(:base) { should be base }
-    its(:error_message) { should be error_message }
-    its(:attribute) { should be error_message.attribute }
-    its(:type) { should be error_message.type }
-    its(:message) { should be error_message.message }
-    its(:options) { should be error_message.options }
+  let(:formatter) { described_class.new(model, error_message) }
+  let(:error_message) do
+    ActiveModel::ErrorCollecting::ErrorMessage.build(model, attribute, message)
   end
 
   describe "#format_message" do
-    subject { formatter.format_message }
-    it { should == "is invalid" }
+    let(:format_message) { formatter.format_message }
+
+    it "includes the message 'is invalid'" do
+      expect(format_message).to include("is invalid")
+    end
   end
 end

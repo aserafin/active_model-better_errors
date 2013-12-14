@@ -1,33 +1,23 @@
 require 'spec_helper'
 
 describe ActiveModel::ErrorCollecting::HumanArrayReporter do
-  subject(:reporter)  { klass.new collection }
-  let(:klass)         { ActiveModel::ErrorCollecting::HumanArrayReporter }
-  let(:collection)    { ActiveModel::ErrorCollecting::ErrorCollection.new base}
-  let(:base)          { User.new }
+  include_context "example model"
+  include_context "error collection"
 
-  describe "#initialize" do
-    its(:collection) { should be collection }
-  end
-
-  describe "#base" do
-    its(:base) { should be base }
-  end
+  include_examples "reporter#base"
 
   describe "#to_a" do
-    subject { reporter.to_a }
-    let(:expected) { ['foo', 'bar'] }
-    before do
-      message_reporter = mock()
-      ActiveModel::ErrorCollecting::HumanMessageReporter.
-        should_receive(:new).
-        and_return(message_reporter)
+    let(:to_a) { reporter.to_a }
+    let(:array) { %w[foo bar] }
+    let(:message_reporter) { double("MessageReporter") }
 
-      message_reporter.
-        should_receive(:full_messages).
-        and_return(expected)
+    before(:each) do
+      expect(ActiveModel::ErrorCollecting::HumanMessageReporter).to receive(:new).and_return(message_reporter)
+      expect(message_reporter).to receive(:full_messages).and_return(array)
     end
 
-    it { should == expected }
+    it "returns an array" do
+      expect(to_a).to eq(array)
+    end
   end
 end

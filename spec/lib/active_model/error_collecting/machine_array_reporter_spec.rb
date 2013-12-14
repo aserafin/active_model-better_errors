@@ -1,40 +1,35 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ActiveModel::ErrorCollecting::MachineArrayReporter do
-  subject(:reporter)  { klass.new collection }
-  let(:klass)         { ActiveModel::ErrorCollecting::MachineArrayReporter }
-  let(:collection)    { ActiveModel::ErrorCollecting::ErrorCollection.new base}
-  let(:base)          { User.new }
+  include_context "example model"
+  include_context "error collection"
 
-  describe "#initialize" do
-    its(:collection) { should be collection }
-  end
-
-  describe "#base" do
-    its(:base) { should be base }
-  end
+  include_examples "reporter#base"
 
   describe "#to_a" do
-    subject { reporter.to_a }
-
-    before  do
-      collection[:first_name] << :invalid
-      collection[:first_name] << [ :too_short, { count: 3 } ]
-      collection[:last_name] << :invalid
+    let(:to_a) { reporter.to_a }
+    let(:array) do
+      [
+        {
+          attribute: "first_name",
+          type: :invalid
+        },
+        {
+          attribute: "first_name",
+          type: :too_short,
+          options: {
+            count: 3
+          }
+        },
+        {
+          attribute: "last_name",
+          type: :invalid
+        }
+      ]
     end
 
-    let(:expected) {[{
-      attribute: 'first_name',
-      type:      :invalid
-    }, {
-      attribute: 'first_name',
-      type:      :too_short,
-      options:   { count: 3 }
-    },{
-      attribute: 'last_name',
-      type:      :invalid
-    }]}
-
-    it { should == expected }
+    it "returns the array" do
+      expect(to_a).to eq(array)
+    end
   end
 end
