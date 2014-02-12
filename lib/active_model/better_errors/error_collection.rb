@@ -43,6 +43,10 @@ module ActiveModel
         self[attribute] << error
       end
 
+      def push_with_base(base, attribute, errors)
+        @collection[attribute] = ErrorMessageSet.new(base, attribute, errors)
+      end
+
       def each
         @collection.each_key do |attribute|
           self[attribute].each do |error_message|

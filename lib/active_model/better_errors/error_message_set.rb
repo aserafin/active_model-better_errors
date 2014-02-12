@@ -26,6 +26,10 @@ module ActiveModel
         super index, ErrorMessage.build(@base, @attribute, *error)
       end
 
+      def push_with_base(base, message, options = {})
+        super ErrorMessage.build(base, @attribute, message, options)
+      end
+
       def insert(index, error)
         super index, ErrorMessage.build(@base, @attribute, *error)
       end
