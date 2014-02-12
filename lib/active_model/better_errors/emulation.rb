@@ -15,7 +15,7 @@ module ActiveModel
       MODEL_METHODS = [
         :clear, :include?, :get, :set, :delete, :[], :[]=,
         :each, :size, :values, :keys, :count, :empty?, :any?,
-        :added?, :entries
+        :added?, :entries, :push_with_base
       ]
 
       MESSAGE_REPORTER_METHODS = [
